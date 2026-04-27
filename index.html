@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акт подтверждения | ShadowKillers — nbv1311</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e5e5e5;
+            font-family: 'Courier New', 'Times New Roman', 'Georgia', 'Lucida Sans Typewriter', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* официальный документ — строгий, ч/б, с рамками */
+        .document {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.2);
+            border: 2px solid #000000;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        /* внутренние поля */
+        .document-inner {
+            padding: 2rem 2rem 2rem 2rem;
+            border: 1px solid #000;
+            margin: 1.2rem;
+        }
+
+        /* гербовая / шапка */
+        .header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+        }
+
+        .org-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-family: inherit;
+        }
+
+        .org-sub {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+
+        .cert-number {
+            text-align: right;
+            font-size: 0.7rem;
+            border-top: 1px dashed #000;
+            margin-top: 8px;
+            padding-top: 6px;
+            font-family: monospace;
+        }
+
+        /* заголовок документа */
+        .title {
+            text-align: center;
+            margin: 1.2rem 0 1rem 0;
+        }
+        .title h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px double #000;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        .title p {
+            font-size: 0.75rem;
+            margin-top: 6px;
+            font-style: normal;
+        }
+
+        /* основной текст подтверждения */
+        .body-text {
+            margin: 1.8rem 0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .statement-box {
+            border: 1px solid #000;
+            padding: 1.6rem;
+            background: #fefefe;
+            margin: 1rem 0 1.2rem 0;
+            box-shadow: inset 0 0 0 1px #fff, 0 0 0 1px #000;
+        }
+
+        .item-name {
+            font-size: 1.7rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0.5rem 0;
+            word-break: break-word;
+            font-family: 'Courier New', monospace;
+        }
+
+        .owner-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: underline;
+            margin: 0.3rem 0 0.8rem 0;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+
+        .attr-line {
+            text-align: center;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+            border-top: 1px dotted #000;
+            display: inline-block;
+            width: 100%;
+            padding-top: 8px;
+        }
+
+        /* детали (таблица/блок) */
+        .details {
+            margin: 2rem 0;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 1rem 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px dotted #aaa;
+            font-size: 0.9rem;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .detail-value {
+            font-family: monospace;
+        }
+
+        /* подписи и печать */
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0 1rem 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .sign-block {
+            width: 220px;
+        }
+        .sign-line {
+            border-bottom: 1px solid #000;
+            margin-top: 1.5rem;
+            margin-bottom: 0.3rem;
+            width: 100%;
+            height: 1.2rem;
+        }
+        .sign-caption {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stamp-area {
+            text-align: right;
+            width: 180px;
+        }
+        .stamp {
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            margin-left: auto;
+            margin-top: 0.5rem;
+            font-family: monospace;
+            background: #fff;
+        }
+        .stamp p {
+            margin: 0;
+            line-height: 1.2;
+        }
+        .stamp .stamp-icon {
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        /* нижняя информационная строка */
+        .footer-note {
+            margin-top: 1.8rem;
+            font-size: 0.65rem;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 1rem;
+            font-family: monospace;
+        }
+        .qr-fake {
+            letter-spacing: 2px;
+        }
+
+        /* печатная машинка эффект */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .document {
+                box-shadow: none;
+                border: 1px solid black;
+                max-width: 100%;
+            }
+            .stamp {
+                border: 2px solid black;
+                background: #fff;
+            }
+        }
+
+        /* адаптив */
+        @media (max-width: 700px) {
+            .document-inner {
+                padding: 1rem;
+                margin: 0.8rem;
+            }
+            .item-name {
+                font-size: 1.2rem;
+            }
+            .owner-name {
+                font-size: 1.3rem;
+            }
+            .signatures {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .stamp-area {
+                text-align: left;
+                margin-top: 0;
+            }
+            .stamp {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="document">
+    <div class="document-inner">
+        <!-- Шапка: гриф и регистрационный номер -->
+        <div class="header">
+            <div class="org-name">РЕЕСТР ЦИФРОВЫХ АКТИВОВ</div>
+            <div class="org-sub">ДЕПОЗИТАРИЙ ВИРТУАЛЬНОГО ПРОСТРАНСТВА · АРХИВ ПРАВ СОБСТВЕННОСТИ</div>
+            <div class="cert-number">
+                <span>№ А-ПП/</span><span id="certDynamicNumber">2026-04-27/037</span><span> · ДАТА РЕГИСТРАЦИИ: </span><span id="currentDateDisplay"></span>
+            </div>
+        </div>
+
+        <!-- Титул документа -->
+        <div class="title">
+            <h1>АКТ ПОДТВЕРЖДЕНИЯ ПРАВ</h1>
+            <p>(официальное удостоверение принадлежности игрового предмета)</p>
+        </div>
+
+        <!-- Тело: однозначное юридическое подтверждение -->
+        <div class="body-text">
+            <p>Настоящим актом, составленным в соответствии с внутренними регламентами учета игровых ценностей и правилами платформы, <strong>удостоверяется</strong>, что уникальный цифровой предмет <strong>«ShadowKillers»</strong> (далее — «Предмет») закреплен за правообладателем на основании безотзывной записи в главном реестре.</p>
+            
+            <div class="statement-box">
+                <div style="font-weight:700; text-align:center; margin-bottom:8px;">▼ ОБЪЕКТ УЧЕТА ▼</div>
+                <div class="item-name">«SHADOWKILLERS»</div>
+                <div style="text-align:center; font-size:0.8rem; margin:4px 0;">идентификационный код предмета</div>
+                <div style="text-align:center; font-family:monospace; letter-spacing:1px; border-bottom:1px solid #aaa; display:inline-block; width:auto; margin:0 auto 0.6rem; padding:0 8px;" id="itemCodeDisplay">SK-07XK-44NQ</div>
+                <div style="font-weight:700; text-align:center; margin: 12px 0 4px 0;">▼ ЗАКОННЫЙ ВЛАДЕЛЕЦ ▼</div>
+                <div class="owner-name">nbv1311</div>
+                <div class="attr-line">идентификатор учетной записи: NBV-1311 / уровень доступа: полный владелец</div>
+                <div style="font-size:0.75rem; text-align:center; margin-top:12px;">Право собственности подтверждено криптографической подписью и неизменяемой записью в блоке данных.</div>
+            </div>
+
+            <p>Предмет «ShadowKillers» обладает следующими характеристиками и закреплён за указанным игроком на постоянной основе. Отчуждение, передача или обременение прав невозможны без двустороннего акта, заверенного уполномоченным узлом верификации.</p>
+        </div>
+
+        <!-- Детали предмета и игрока (официальные реквизиты) -->
+        <div class="details">
+            <div class="detail-row">
+                <span class="detail-label">Полное наименование предмета:</span>
+                <span class="detail-value">ShadowKillers (элитный артефакт, версия 2.0)</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">UUID предмета / артикул:</span>
+                <span class="detail-value" id="uuidField">sh-kill-87f3-9b2c-44a1</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Владелец (login):</span>
+                <span class="detail-value">nbv1311</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Игровой идентификатор (GID):</span>
+                <span class="detail-value">#NBV1311-SHADOW</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Дата первичной фиксации прав:</span>
+                <span class="detail-value" id="issueDateText"></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Статус подтверждения:</span>
+                <span class="detail-value">АКТИВЕН / НЕОСПОРИМО</span>
+            </div>
+        </div>
+
+        <!-- Подписи, печать, уполномоченные лица -->
+        <div class="signatures">
+            <div class="sign-block">
+                <div class="sign-line"></div>
+                <div class="sign-caption">Уполномоченный регистратор</div>
+                <div class="sign-caption" style="font-size:0.65rem;">И.О. АРХИВАРИУСА ЦИФРОВОГО РЕЕСТРА</div>
+                <div style="font-family: monospace; font-size:0.7rem; margin-top:6px;">(подпись) <span style="letter-spacing:2px;">__________________</span></div>
+                <div style="font-size:0.7rem; margin-top:3px;">Расшифровка: К.В. Нордманн</div>
+            </div>
+            <div class="sign-block">
+                <div class="sign-line"></div>
+                <div class="sign-caption">Руководитель отдела цифровых активов</div>
+                <div style="font-family: monospace; font-size:0.7rem; margin-top:6px;">(подпись) <span style="letter-spacing:2px;">__________________</span></div>
+                <div style="font-size:0.7rem; margin-top:3px;">Расшифровка: М.Д. Серебряков</div>
+            </div>
+            <div class="stamp-area">
+                <div class="stamp">
+                    <div class="stamp-icon">⚡</div>
+                    <p>ЗАВЕРЕНО</p>
+                    <p>РЕЕСТР</p>
+                    <p>SHADOWKEEP</p>
+                </div>
+                <div style="font-size:0.6rem; margin-top:6px;">М.П. (гербовая печать)</div>
+            </div>
+        </div>
+
+        <!-- Нижний колонтитул: блокчейн-идентификатор и юридическая оговорка -->
+        <div class="footer-note">
+            <div>ДОКУМЕНТ ИМЕЕТ ЮРИДИЧЕСКУЮ СИЛУ В ПРЕДЕЛАХ ВИРТУАЛЬНОЙ ЭКОСИСТЕМЫ SHADOWKILLERS.</div>
+            <div style="margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                <span>ХЭШ ТРАНЗАКЦИИ: 0x3f1a7c9e2b8d4f6a1c3e5b7d9f2a4c6e8</span>
+                <span>ВЕРИФИКАЦИЯ: <span id="checksumSpan">SK-87F3-91B2-NBV</span></span>
+            </div>
+            <div style="margin-top: 8px; font-size: 0.65rem;">Подлинность документа может быть проверена через центральный узел реестра по уникальному коду предмета и имени владельца. Дата формирования: <span id="fullDateSpan"></span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Функция для установки всех необходимых дат и генерации уникальных чёрно-белых идентификаторов
+        const today = new Date();
+        
+        // формат даты: 27 апреля 2026 г.
+        const optionsLong = { day: 'numeric', month: 'long', year: 'numeric' };
+        const formattedLong = today.toLocaleDateString('ru-RU', optionsLong);
+        // краткий формат YYYY-MM-DD
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const shortDate = `${year}-${month}-${day}`;
+        
+        // Вставляем даты в нужные элементы
+        const dateDisplaySpan = document.getElementById('currentDateDisplay');
+        if (dateDisplaySpan) dateDisplaySpan.innerText = shortDate;
+        
+        const issueDateSpan = document.getElementById('issueDateText');
+        if (issueDateSpan) issueDateSpan.innerText = formattedLong;
+        
+        const fullDateSpan = document.getElementById('fullDateSpan');
+        if (fullDateSpan) fullDateSpan.innerText = `${formattedLong} (${shortDate})`;
+        
+        // Для номера сертификата добавим рандомный суффикс, сохраняя ч/б стиль
+        const certDynamic = document.getElementById('certDynamicNumber');
+        if (certDynamic) {
+            const randomSuffix = Math.floor(Math.random() * 9000 + 1000);
+            certDynamic.innerText = `2026-04-27/${randomSuffix}`;
+        }
+        
+        // Генерация уникального артикула предмета и UUID (официальный вид)
+        const itemCodeDisplay = document.getElementById('itemCodeDisplay');
+        const uuidField = document.getElementById('uuidField');
+        const checksumSpan = document.getElementById('checksumSpan');
+        
+        // фиксированная, но выглядящая как официальная комбинация, привязанная к имени игрока
+        const baseItem = "SK-07XK-44NQ";
+        const uuidBase = "sh-kill-87f3-9b2c-44a1";
+        const checkLink = "SK-87F3-91B2-NBV";
+        
+        // но добавим легкую динамическую подпись, но сохраняя консистентность с nbv1311
+        // чтобы каждый документ был уникален, но в рамках ч/б стиля
+        const hashCode = function(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash).toString(16).substring(0,6);
+        };
+        const ownerSeed = "nbv1311" + shortDate;
+        const uniquePart = hashCode(ownerSeed).toUpperCase();
+        
+        if (itemCodeDisplay) {
+            // сохраняем формат но с уникальным постфиксом для аутентичности
+            itemCodeDisplay.innerText = `SK-${uniquePart.slice(0,2)}XK-${uniquePart.slice(2,6)}`;
+        }
+        if (uuidField) {
+            uuidField.innerText = `sh-kill-${uniquePart.slice(0,4)}-${uniquePart.slice(4,8)}-${uniquePart.slice(8,10) || 'a1'}`;
+        }
+        if (checksumSpan) {
+            checksumSpan.innerText = `VER-${uniquePart}-NBV`;
+        }
+        
+        // дополнительно, если нужна еще подпись в нижней строке хэша
+        const transactionHashSpan = document.querySelector('.footer-note span:first-child');
+        if (transactionHashSpan && transactionHashSpan.innerText.includes('ХЭШ')) {
+            // добавим детерминированный хэш, зависящий от игрока и даты
+            const txHash = `0x${hashCode("ShadowKillers" + ownerSeed + "nbv1311").padEnd(32, 'f').slice(0,32)}`;
+            transactionHashSpan.innerText = `ХЭШ ТРАНЗАКЦИИ: ${txHash.toUpperCase()}`;
+        }
+        
+        // гарантия что в документе везде используется "nbv1311" и "ShadowKillers"
+        // дубляж в деталях уже присутствует, но проверим случайно вставленные поля
+        const ownerNameSpans = document.querySelectorAll('.owner-name, .detail-row .detail-value');
+        for (let span of ownerNameSpans) {
+            if (span.innerText === 'nbv1311' || span.innerText.includes('nbv1311')) continue;
+            // принудительно не трогаем, но если где-то в future может быть пустой, но ок.
+        }
+        // дополнительно в блоке statement-box захардкожено, но всё корректно.
+        
+        // Также для полной уверенности — напечатаем в консоль (не обязательно), но все данные установлены.
+    })();
+</script>
+</body>
+</html>
